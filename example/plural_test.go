@@ -11,7 +11,7 @@ import (
 )
 
 // Test en
-func TestEnglish(t *testing.T) {
+func TestEnglishPlural(t *testing.T) {
 	var tests []pluralTestUtil.PluralTest
 
 	tests = pluralTestUtil.AppendIntegerTests(tests, plural.One, []string{"1"})
@@ -19,11 +19,11 @@ func TestEnglish(t *testing.T) {
 	tests = pluralTestUtil.AppendIntegerTests(tests, plural.Other, []string{"0", "2~16", "100", "1000", "10000", "100000", "1000000"})
 	tests = pluralTestUtil.AppendDecimalTests(tests, plural.Other, []string{"0.0~1.5", "10.0", "100.0", "1000.0", "10000.0", "100000.0", "1000000.0"})
 
-	pluralTestUtil.Run(t, "English", English(), tests)
+	pluralTestUtil.Run(t, "EnglishPlural", EnglishPlural(), tests)
 }
 
 // Test fr
-func TestFrench(t *testing.T) {
+func TestFrenchPlural(t *testing.T) {
 	var tests []pluralTestUtil.PluralTest
 
 	tests = pluralTestUtil.AppendIntegerTests(tests, plural.One, []string{"0", "1"})
@@ -32,5 +32,5 @@ func TestFrench(t *testing.T) {
 	tests = pluralTestUtil.AppendIntegerTests(tests, plural.Other, []string{"2~17", "100", "1000", "10000", "100000", "1000000"})
 	tests = pluralTestUtil.AppendDecimalTests(tests, plural.Other, []string{"2.0~3.5", "10.0", "100.0", "1000.0", "10000.0", "100000.0", "1000000.0"})
 
-	pluralTestUtil.Run(t, "French", French(), tests)
+	pluralTestUtil.Run(t, "FrenchPlural", FrenchPlural(), tests)
 }

@@ -8,7 +8,7 @@ import (
 )
 
 // en
-func English() *plural.PluralSpec {
+func EnglishPlural() *plural.PluralSpec {
 	fn := func(ops *plural.Operands) plural.Plural {
 		// i = 1 and v = 0
 		if plural.IntEqualsAny(ops.I, 1) && plural.IntEqualsAny(ops.V, 0) {
@@ -20,7 +20,7 @@ func English() *plural.PluralSpec {
 }
 
 // fr
-func French() *plural.PluralSpec {
+func FrenchPlural() *plural.PluralSpec {
 	fn := func(ops *plural.Operands) plural.Plural {
 		// i = 0,1
 		if plural.IntEqualsAny(ops.I, 0, 1) {
