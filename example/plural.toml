@@ -1,0 +1,7 @@
+[[locales]]
+locale = "en"
+functionName = "English"
+
+[[locales]]
+locale = "fr"
+functionName = "French"
