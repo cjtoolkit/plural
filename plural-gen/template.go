@@ -22,7 +22,7 @@ import (
 )
 
 {{ $relationRegexp := relationRegexp }}{{ range .Glue }}
-// {{ .Locale.Locale }}
+// {{ .Locale.Code }}
 func {{ .Locale.FunctionName }}() plural.PluralGroup {
 	return plural.PluralGroup{
 		{{ with .PluralGroup }} Cardinal: plural.NewPluralSpec([]plural.Plural{  {{ range $i, $e := .PluralRules }}{{ if $i }}, {{ end }}plural.{{ $e.CountTitle }}{{ end }} }, func(ops *plural.Operands) plural.Plural { {{ range .PluralRules }}{{ if .GoCondition $relationRegexp }}
@@ -58,7 +58,7 @@ import (
 )
 
 {{ range .Glue }}{{ $locale := .Locale }}
-// Test {{ $locale.Locale }}
+// Test {{ $locale.Code }}
 func Test{{ $locale.FunctionNameTitle }}(t *testing.T) {
 	group := {{ $locale.FunctionName }}()
 	{{ with .PluralGroup }} t.Run("Cardinal", func(t *testing.T) {

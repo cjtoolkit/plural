@@ -57,12 +57,12 @@ func main() {
 
 	glue := []Glue{}
 	for _, locale := range user.Locales {
-		group, ok := localeMap[locale.Locale]
+		group, ok := localeMap[locale.Code]
 		if !ok {
-			log.Fatalf("User Locale not found: %s", locale.Locale)
+			log.Fatalf("User Locale not found: %s", locale.Code)
 		}
 
-		groupOridinal := localeOrdinalMap[locale.Locale]
+		groupOridinal := localeOrdinalMap[locale.Code]
 
 		glue = append(glue, Glue{
 			Locale:             locale,

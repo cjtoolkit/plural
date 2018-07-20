@@ -1,11 +1,11 @@
 [[locales]]
-locale = "en"
+code = "en"
 functionName = "EnglishPlural"
 
 [[locales]]
-locale = "fr"
+code = "fr"
 functionName = "FrenchPlural"
 
 [[locales]]
-locale = "cy"
+code = "cy"
 functionName = "WelshPlural"

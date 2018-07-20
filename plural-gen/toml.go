@@ -7,7 +7,7 @@ type UserSupplement struct {
 }
 
 type Locale struct {
-	Locale       string `toml:"locale"`
+	Code         string `toml:"code"`
 	FunctionName string `toml:"functionName"`
 }
 
