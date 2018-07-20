@@ -82,14 +82,14 @@ func main() {
 	codeName := strings.Join(userFileNameSplit[:len(userFileNameSplit)-1], ".") + ".go"
 	testName := strings.Join(userFileNameSplit[:len(userFileNameSplit)-1], ".") + "_test.go"
 
-	file, err = os.Create(codeName)
-	if err != nil {
-		log.Fatalf("Unable to create file: %s", err)
-	}
-
 	relationRegexp := regexp.MustCompile("([niftvw])(?: % ([0-9]+))? (!=|=)(.*)")
 	funcs := template.FuncMap{
 		"relationRegexp": func() *regexp.Regexp { return relationRegexp },
+	}
+
+	file, err = os.Create(codeName)
+	if err != nil {
+		log.Fatalf("Unable to create file: %s", err)
 	}
 
 	template.Must(template.New("code").Funcs(funcs).Parse(codeTemplate)).Execute(file, ctx)
