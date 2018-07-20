@@ -50,7 +50,7 @@ import (
 
 {{ range .Glue }}
 // Test {{ .Locale.Locale }}
-func Test{{ .Locale.FunctionName }}(t *testing.T) { {{ with .PluralGroup }}
+func Test{{ .Locale.FunctionNameTitle }}(t *testing.T) { {{ with .PluralGroup }}
 	var tests []pluralTestUtil.PluralTest
 	{{range .PluralRules}}
 	{{if .IntegerExamples}}tests = pluralTestUtil.AppendIntegerTests(tests, plural.{{.CountTitle}}, {{printf "%#v" .IntegerExamples}}){{end}}
