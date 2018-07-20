@@ -35,6 +35,23 @@ func (ps *PluralSpec) Plural(number interface{}) (Plural, error) {
 	return ps.PluralFunc(ops), nil
 }
 
+// Create Plural Map from Slice
+func (ps *PluralSpec) CreatePluralMapFromSlice(s []string) map[Plural]string {
+	m := stringSliceToMap(s)
+	fallback := ""
+	pluralMap := map[Plural]string{}
+	for k, plural := range ps.PluralsSlice {
+		vv, ok := m[k]
+		if !ok {
+			pluralMap[plural] = fallback
+			continue
+		}
+		fallback = vv
+		pluralMap[plural] = vv
+	}
+	return pluralMap
+}
+
 func newPluralSet(plurals ...Plural) map[Plural]struct{} {
 	set := make(map[Plural]struct{}, len(plurals))
 	for _, plural := range plurals {
@@ -54,4 +71,12 @@ func IntEqualsAny(i int64, any ...int64) bool {
 		}
 	}
 	return false
+}
+
+func stringSliceToMap(s []string) map[int]string {
+	m := map[int]string{}
+	for k, v := range s {
+		m[k] = v
+	}
+	return m
 }
