@@ -5,10 +5,9 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"regexp"
 	"strings"
 	"text/template"
-
-	"regexp"
 
 	"github.com/BurntSushi/toml"
 )
