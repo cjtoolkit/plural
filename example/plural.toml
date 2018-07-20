@@ -5,3 +5,7 @@ functionName = "EnglishPlural"
 [[locales]]
 locale = "fr"
 functionName = "FrenchPlural"
+
+[[locales]]
+locale = "cy"
+functionName = "WelshPlural"

@@ -12,25 +12,98 @@ import (
 
 // Test en
 func TestEnglishPlural(t *testing.T) {
-	var tests []pluralTestUtil.PluralTest
+	group := EnglishPlural()
+	t.Run("Cardinal", func(t *testing.T) {
+		var tests []pluralTestUtil.PluralTest
 
-	tests = pluralTestUtil.AppendIntegerTests(tests, plural.One, []string{"1"})
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.One, []string{"1"})
 
-	tests = pluralTestUtil.AppendIntegerTests(tests, plural.Other, []string{"0", "2~16", "100", "1000", "10000", "100000", "1000000"})
-	tests = pluralTestUtil.AppendDecimalTests(tests, plural.Other, []string{"0.0~1.5", "10.0", "100.0", "1000.0", "10000.0", "100000.0", "1000000.0"})
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Other, []string{"0", "2~16", "100", "1000", "10000", "100000", "1000000"})
+		tests = pluralTestUtil.AppendDecimalTests(tests, plural.Other, []string{"0.0~1.5", "10.0", "100.0", "1000.0", "10000.0", "100000.0", "1000000.0"})
 
-	pluralTestUtil.Run(t, "EnglishPlural", EnglishPlural(), tests)
+		pluralTestUtil.Run(t, "EnglishPlural (Cardinal)", group.Cardinal, tests)
+	})
+	t.Run("Ordinal", func(t *testing.T) {
+		var tests []pluralTestUtil.PluralTest
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.One, []string{"1", "21", "31", "41", "51", "61", "71", "81", "101", "1001"})
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Two, []string{"2", "22", "32", "42", "52", "62", "72", "82", "102", "1002"})
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Few, []string{"3", "23", "33", "43", "53", "63", "73", "83", "103", "1003"})
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Other, []string{"0", "4~18", "100", "1000", "10000", "100000", "1000000"})
+
+		pluralTestUtil.Run(t, "EnglishPlural (Ordinal)", group.Ordinal, tests)
+	})
 }
 
 // Test fr
 func TestFrenchPlural(t *testing.T) {
-	var tests []pluralTestUtil.PluralTest
+	group := FrenchPlural()
+	t.Run("Cardinal", func(t *testing.T) {
+		var tests []pluralTestUtil.PluralTest
 
-	tests = pluralTestUtil.AppendIntegerTests(tests, plural.One, []string{"0", "1"})
-	tests = pluralTestUtil.AppendDecimalTests(tests, plural.One, []string{"0.0~1.5"})
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.One, []string{"0", "1"})
+		tests = pluralTestUtil.AppendDecimalTests(tests, plural.One, []string{"0.0~1.5"})
 
-	tests = pluralTestUtil.AppendIntegerTests(tests, plural.Other, []string{"2~17", "100", "1000", "10000", "100000", "1000000"})
-	tests = pluralTestUtil.AppendDecimalTests(tests, plural.Other, []string{"2.0~3.5", "10.0", "100.0", "1000.0", "10000.0", "100000.0", "1000000.0"})
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Other, []string{"2~17", "100", "1000", "10000", "100000", "1000000"})
+		tests = pluralTestUtil.AppendDecimalTests(tests, plural.Other, []string{"2.0~3.5", "10.0", "100.0", "1000.0", "10000.0", "100000.0", "1000000.0"})
 
-	pluralTestUtil.Run(t, "FrenchPlural", FrenchPlural(), tests)
+		pluralTestUtil.Run(t, "FrenchPlural (Cardinal)", group.Cardinal, tests)
+	})
+	t.Run("Ordinal", func(t *testing.T) {
+		var tests []pluralTestUtil.PluralTest
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.One, []string{"1"})
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Other, []string{"0", "2~16", "100", "1000", "10000", "100000", "1000000"})
+
+		pluralTestUtil.Run(t, "FrenchPlural (Ordinal)", group.Ordinal, tests)
+	})
+}
+
+// Test cy
+func TestWelshPlural(t *testing.T) {
+	group := WelshPlural()
+	t.Run("Cardinal", func(t *testing.T) {
+		var tests []pluralTestUtil.PluralTest
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Zero, []string{"0"})
+		tests = pluralTestUtil.AppendDecimalTests(tests, plural.Zero, []string{"0.0", "0.00", "0.000", "0.0000"})
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.One, []string{"1"})
+		tests = pluralTestUtil.AppendDecimalTests(tests, plural.One, []string{"1.0", "1.00", "1.000", "1.0000"})
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Two, []string{"2"})
+		tests = pluralTestUtil.AppendDecimalTests(tests, plural.Two, []string{"2.0", "2.00", "2.000", "2.0000"})
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Few, []string{"3"})
+		tests = pluralTestUtil.AppendDecimalTests(tests, plural.Few, []string{"3.0", "3.00", "3.000", "3.0000"})
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Many, []string{"6"})
+		tests = pluralTestUtil.AppendDecimalTests(tests, plural.Many, []string{"6.0", "6.00", "6.000", "6.0000"})
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Other, []string{"4", "5", "7~20", "100", "1000", "10000", "100000", "1000000"})
+		tests = pluralTestUtil.AppendDecimalTests(tests, plural.Other, []string{"0.1~0.9", "1.1~1.7", "10.0", "100.0", "1000.0", "10000.0", "100000.0", "1000000.0"})
+
+		pluralTestUtil.Run(t, "WelshPlural (Cardinal)", group.Cardinal, tests)
+	})
+	t.Run("Ordinal", func(t *testing.T) {
+		var tests []pluralTestUtil.PluralTest
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Zero, []string{"0", "7~9"})
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.One, []string{"1"})
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Two, []string{"2"})
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Few, []string{"3", "4"})
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Many, []string{"5", "6"})
+
+		tests = pluralTestUtil.AppendIntegerTests(tests, plural.Other, []string{"10~25", "100", "1000", "10000", "100000", "1000000"})
+
+		pluralTestUtil.Run(t, "WelshPlural (Ordinal)", group.Ordinal, tests)
+	})
 }

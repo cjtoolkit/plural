@@ -21,10 +21,22 @@ func main() {
 		log.Fatalf("Failed to decode: %s", err)
 	}
 
+	var ordinalData SupplementalData
+	if err := xml.Unmarshal([]byte(ordinalsXml), &ordinalData); err != nil {
+		log.Fatalf("Failed to decode: %s", err)
+	}
+
 	localeMap := map[string]PluralGroup{}
 	for _, pg := range data.PluralGroups {
 		for _, locale := range pg.SplitLocales() {
 			localeMap[locale] = pg
+		}
+	}
+
+	localeOrdinalMap := map[string]PluralGroup{}
+	for _, pg := range ordinalData.PluralGroups {
+		for _, locale := range pg.SplitLocales() {
+			localeOrdinalMap[locale] = pg
 		}
 	}
 
@@ -49,9 +61,15 @@ func main() {
 			log.Fatalf("User Locale not found: %s", locale.Locale)
 		}
 
+		groupOridinal, ok := localeOrdinalMap[locale.Locale]
+		if !ok {
+			log.Fatalf("User Locale not found: %s", locale.Locale)
+		}
+
 		glue = append(glue, Glue{
-			Locale:      locale,
-			PluralGroup: group,
+			Locale:             locale,
+			PluralGroup:        group,
+			PluralGroupOrdinal: groupOridinal,
 		})
 	}
 

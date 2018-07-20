@@ -8,25 +8,101 @@ import (
 )
 
 // en
-func EnglishPlural() *plural.PluralSpec {
-	fn := func(ops *plural.Operands) plural.Plural {
-		// i = 1 and v = 0
-		if plural.IntEqualsAny(ops.I, 1) && plural.IntEqualsAny(ops.V, 0) {
-			return plural.One
-		}
-		return plural.Other
+func EnglishPlural() plural.PluralGroup {
+	return plural.PluralGroup{
+		Cardinal: plural.NewPluralSpec([]plural.Plural{plural.One, plural.Other}, func(ops *plural.Operands) plural.Plural {
+			// i = 1 and v = 0
+			if plural.IntEqualsAny(ops.I, 1) && plural.IntEqualsAny(ops.V, 0) {
+				return plural.One
+			}
+			return plural.Other
+		}),
+		Ordinal: plural.NewPluralSpec([]plural.Plural{plural.One, plural.Two, plural.Few, plural.Other}, func(ops *plural.Operands) plural.Plural {
+			// n % 10 = 1 and n % 100 != 11
+			if ops.NmodEqualsAny(10, 1) && !ops.NmodEqualsAny(100, 11) {
+				return plural.One
+			}
+			// n % 10 = 2 and n % 100 != 12
+			if ops.NmodEqualsAny(10, 2) && !ops.NmodEqualsAny(100, 12) {
+				return plural.Two
+			}
+			// n % 10 = 3 and n % 100 != 13
+			if ops.NmodEqualsAny(10, 3) && !ops.NmodEqualsAny(100, 13) {
+				return plural.Few
+			}
+			return plural.Other
+		}),
 	}
-	return plural.NewPluralSpec([]plural.Plural{plural.One, plural.Other}, fn)
 }
 
 // fr
-func FrenchPlural() *plural.PluralSpec {
-	fn := func(ops *plural.Operands) plural.Plural {
-		// i = 0,1
-		if plural.IntEqualsAny(ops.I, 0, 1) {
-			return plural.One
-		}
-		return plural.Other
+func FrenchPlural() plural.PluralGroup {
+	return plural.PluralGroup{
+		Cardinal: plural.NewPluralSpec([]plural.Plural{plural.One, plural.Other}, func(ops *plural.Operands) plural.Plural {
+			// i = 0,1
+			if plural.IntEqualsAny(ops.I, 0, 1) {
+				return plural.One
+			}
+			return plural.Other
+		}),
+		Ordinal: plural.NewPluralSpec([]plural.Plural{plural.One, plural.Other}, func(ops *plural.Operands) plural.Plural {
+			// n = 1
+			if ops.NequalsAny(1) {
+				return plural.One
+			}
+			return plural.Other
+		}),
 	}
-	return plural.NewPluralSpec([]plural.Plural{plural.One, plural.Other}, fn)
+}
+
+// cy
+func WelshPlural() plural.PluralGroup {
+	return plural.PluralGroup{
+		Cardinal: plural.NewPluralSpec([]plural.Plural{plural.Zero, plural.One, plural.Two, plural.Few, plural.Many, plural.Other}, func(ops *plural.Operands) plural.Plural {
+			// n = 0
+			if ops.NequalsAny(0) {
+				return plural.Zero
+			}
+			// n = 1
+			if ops.NequalsAny(1) {
+				return plural.One
+			}
+			// n = 2
+			if ops.NequalsAny(2) {
+				return plural.Two
+			}
+			// n = 3
+			if ops.NequalsAny(3) {
+				return plural.Few
+			}
+			// n = 6
+			if ops.NequalsAny(6) {
+				return plural.Many
+			}
+			return plural.Other
+		}),
+		Ordinal: plural.NewPluralSpec([]plural.Plural{plural.Zero, plural.One, plural.Two, plural.Few, plural.Many, plural.Other}, func(ops *plural.Operands) plural.Plural {
+			// n = 0,7,8,9
+			if ops.NequalsAny(0, 7, 8, 9) {
+				return plural.Zero
+			}
+			// n = 1
+			if ops.NequalsAny(1) {
+				return plural.One
+			}
+			// n = 2
+			if ops.NequalsAny(2) {
+				return plural.Two
+			}
+			// n = 3,4
+			if ops.NequalsAny(3, 4) {
+				return plural.Few
+			}
+			// n = 5,6
+			if ops.NequalsAny(5, 6) {
+				return plural.Many
+			}
+			return plural.Other
+		}),
+	}
 }
