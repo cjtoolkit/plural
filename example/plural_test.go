@@ -23,6 +23,7 @@ func TestEnglishPlural(t *testing.T) {
 
 		pluralTestUtil.Run(t, "EnglishPlural (Cardinal)", group.Cardinal, tests)
 	})
+
 	t.Run("Ordinal", func(t *testing.T) {
 		var tests []pluralTestUtil.PluralTest
 
@@ -52,6 +53,7 @@ func TestFrenchPlural(t *testing.T) {
 
 		pluralTestUtil.Run(t, "FrenchPlural (Cardinal)", group.Cardinal, tests)
 	})
+
 	t.Run("Ordinal", func(t *testing.T) {
 		var tests []pluralTestUtil.PluralTest
 
@@ -89,6 +91,7 @@ func TestWelshPlural(t *testing.T) {
 
 		pluralTestUtil.Run(t, "WelshPlural (Cardinal)", group.Cardinal, tests)
 	})
+
 	t.Run("Ordinal", func(t *testing.T) {
 		var tests []pluralTestUtil.PluralTest
 

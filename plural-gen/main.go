@@ -8,6 +8,8 @@ import (
 	"strings"
 	"text/template"
 
+	"regexp"
+
 	"github.com/BurntSushi/toml"
 )
 
@@ -61,10 +63,7 @@ func main() {
 			log.Fatalf("User Locale not found: %s", locale.Locale)
 		}
 
-		groupOridinal, ok := localeOrdinalMap[locale.Locale]
-		if !ok {
-			log.Fatalf("User Locale not found: %s", locale.Locale)
-		}
+		groupOridinal := localeOrdinalMap[locale.Locale]
 
 		glue = append(glue, Glue{
 			Locale:             locale,
@@ -88,7 +87,12 @@ func main() {
 		log.Fatalf("Unable to create file: %s", err)
 	}
 
-	template.Must(template.New("code").Parse(codeTemplate)).Execute(file, ctx)
+	relationRegexp := regexp.MustCompile("([niftvw])(?: % ([0-9]+))? (!=|=)(.*)")
+	funcs := template.FuncMap{
+		"relationRegexp": func() *regexp.Regexp { return relationRegexp },
+	}
+
+	template.Must(template.New("code").Funcs(funcs).Parse(codeTemplate)).Execute(file, ctx)
 	file.Close()
 	exec.Command("go", "fmt", codeName).Run()
 

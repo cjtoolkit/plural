@@ -21,20 +21,20 @@ import (
 	"github.com/cjtoolkit/plural"
 )
 
-{{ range .Glue }}
+{{ $relationRegexp := relationRegexp }}{{ range .Glue }}
 // {{ .Locale.Locale }}
 func {{ .Locale.FunctionName }}() plural.PluralGroup {
 	return plural.PluralGroup{
-		{{ with .PluralGroup }} Cardinal: plural.NewPluralSpec([]plural.Plural{  {{ range $i, $e := .PluralRules }}{{ if $i }}, {{ end }}plural.{{ $e.CountTitle }}{{ end }} }, func(ops *plural.Operands) plural.Plural { {{ range .PluralRules }}{{ if .GoCondition }}
+		{{ with .PluralGroup }} Cardinal: plural.NewPluralSpec([]plural.Plural{  {{ range $i, $e := .PluralRules }}{{ if $i }}, {{ end }}plural.{{ $e.CountTitle }}{{ end }} }, func(ops *plural.Operands) plural.Plural { {{ range .PluralRules }}{{ if .GoCondition $relationRegexp }}
 			// {{ .Condition }}
-			if {{ .GoCondition }} {
+			if {{ .GoCondition $relationRegexp }} {
 				return plural.{{ .CountTitle }}
 			}{{ end }}{{ end }}
 			return plural.Other
 		}), {{ end }}
-		{{ with .PluralGroupOrdinal }} Ordinal: plural.NewPluralSpec([]plural.Plural{  {{ range $i, $e := .PluralRules }}{{ if $i }}, {{ end }}plural.{{ $e.CountTitle }}{{ end }} }, func(ops *plural.Operands) plural.Plural { {{ range .PluralRules }}{{ if .GoCondition }}
+		{{ with .PluralGroupOrdinal }} Ordinal: plural.NewPluralSpec([]plural.Plural{  {{ range $i, $e := .PluralRules }}{{ if $i }}, {{ end }}plural.{{ $e.CountTitle }}{{ end }} }, func(ops *plural.Operands) plural.Plural { {{ range .PluralRules }}{{ if .GoCondition $relationRegexp }}
 			// {{ .Condition }}
-			if {{ .GoCondition }} {
+			if {{ .GoCondition $relationRegexp }} {
 				return plural.{{ .CountTitle }}
 			}{{ end }}{{ end }}
 			return plural.Other
@@ -69,6 +69,7 @@ func Test{{ $locale.FunctionNameTitle }}(t *testing.T) {
 		{{ end }}
 		pluralTestUtil.Run(t, "{{ $locale.FunctionName }} (Cardinal)", group.Cardinal, tests)
 	}){{ end }}
+
 	{{ with .PluralGroupOrdinal }} t.Run("Ordinal", func(t *testing.T) {
 		var tests []pluralTestUtil.PluralTest
 		{{ range .PluralRules }}

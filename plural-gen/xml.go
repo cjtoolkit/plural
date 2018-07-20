@@ -76,10 +76,8 @@ func (pr *PluralRule) DecimalExamples() []string {
 	return decimal
 }
 
-var relationRegexp = regexp.MustCompile("([niftvw])(?: % ([0-9]+))? (!=|=)(.*)")
-
 // GoCondition converts the XML condition to valid Go code.
-func (pr *PluralRule) GoCondition() string {
+func (pr *PluralRule) GoCondition(relationRegexp *regexp.Regexp) string {
 	var ors []string
 	for _, and := range strings.Split(pr.Condition(), "or") {
 		var ands []string
