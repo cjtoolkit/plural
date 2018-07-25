@@ -3,7 +3,7 @@ package main
 import "strings"
 
 type UserSupplement struct {
-	Locales []Locale `toml:"locales"`
+	Locales []Locale `toml:"locale"`
 }
 
 type Locale struct {
