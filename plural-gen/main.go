@@ -9,6 +9,8 @@ import (
 	"strings"
 	"text/template"
 
+	"path"
+
 	"github.com/BurntSushi/toml"
 )
 
@@ -77,7 +79,7 @@ func main() {
 		Glue:        glue,
 	}
 
-	userFileNameSplit := strings.Split(userFileName, ".")
+	userFileNameSplit := strings.Split(path.Base(userFileName), ".")
 	codeName := strings.Join(userFileNameSplit[:len(userFileNameSplit)-1], ".") + ".go"
 	testName := strings.Join(userFileNameSplit[:len(userFileNameSplit)-1], ".") + "_test.go"
 
