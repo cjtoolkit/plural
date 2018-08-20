@@ -5,13 +5,12 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path"
 	"regexp"
 	"strings"
 	"text/template"
 
-	"path"
-
-	"github.com/BurntSushi/toml"
+	toml "github.com/pelletier/go-toml"
 )
 
 func main() {
@@ -51,7 +50,7 @@ func main() {
 	}
 
 	var user UserSupplement
-	_, err = toml.DecodeReader(file, &user)
+	err = toml.NewDecoder(file).Decode(&user)
 	if err != nil {
 		log.Fatalf("Unable to parse user file with toml: %s", err)
 	}
