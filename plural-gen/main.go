@@ -92,7 +92,10 @@ func main() {
 		log.Fatalf("Unable to create file: %s", err)
 	}
 
-	template.Must(template.New("code").Funcs(funcs).Parse(codeTemplate)).Execute(file, ctx)
+	err = template.Must(template.New("code").Funcs(funcs).Parse(codeTemplate)).Execute(file, ctx)
+	if err != nil {
+		log.Panic(err)
+	}
 	file.Close()
 	exec.Command("go", "fmt", codeName).Run()
 
@@ -101,7 +104,10 @@ func main() {
 		log.Fatalf("Unable to create file: %s", err)
 	}
 
-	template.Must(template.New("code").Parse(testTemplate)).Execute(file, ctx)
+	err = template.Must(template.New("code").Parse(testTemplate)).Execute(file, ctx)
+	if err != nil {
+		log.Panic(err)
+	}
 	file.Close()
 	exec.Command("go", "fmt", testName).Run()
 }
