@@ -5,13 +5,12 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path"
 	"regexp"
 	"strings"
 	"text/template"
 
-	"path"
-
-	"github.com/BurntSushi/toml"
+	toml "github.com/pelletier/go-toml"
 )
 
 func main() {
@@ -51,7 +50,7 @@ func main() {
 	}
 
 	var user UserSupplement
-	_, err = toml.DecodeReader(file, &user)
+	err = toml.NewDecoder(file).Decode(&user)
 	if err != nil {
 		log.Fatalf("Unable to parse user file with toml: %s", err)
 	}
@@ -93,7 +92,10 @@ func main() {
 		log.Fatalf("Unable to create file: %s", err)
 	}
 
-	template.Must(template.New("code").Funcs(funcs).Parse(codeTemplate)).Execute(file, ctx)
+	err = template.Must(template.New("code").Funcs(funcs).Parse(codeTemplate)).Execute(file, ctx)
+	if err != nil {
+		log.Panic(err)
+	}
 	file.Close()
 	exec.Command("go", "fmt", codeName).Run()
 
@@ -102,7 +104,10 @@ func main() {
 		log.Fatalf("Unable to create file: %s", err)
 	}
 
-	template.Must(template.New("code").Parse(testTemplate)).Execute(file, ctx)
+	err = template.Must(template.New("code").Parse(testTemplate)).Execute(file, ctx)
+	if err != nil {
+		log.Panic(err)
+	}
 	file.Close()
 	exec.Command("go", "fmt", testName).Run()
 }
