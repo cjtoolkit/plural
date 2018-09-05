@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/cjtoolkit/plural.svg?branch=master)](https://travis-ci.com/cjtoolkit/plural)
+
 # Plural
 
 A lightweight plural rule system and generator
