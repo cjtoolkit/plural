@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/cjtoolkit/plural.svg?branch=master)](https://travis-ci.com/cjtoolkit/plural)
+[![Build Status](https://travis-ci.org/cjtoolkit/plural.svg?branch=master)](https://travis-ci.org/cjtoolkit/plural)
 
 # Plural
 
